@@ -36,7 +36,7 @@ public class SmdsRetrieveEventsWorker {
     this.progress = progress;
   }
 
-  String[] run() throws Exception {
+  String[] run() {
     AuthenticatingPhaseWorker authenticatingPhaseWorker = new AuthenticatingPhaseWorker(progress, apduTransmitter, es9Module);
 
     InitialAuthenticationKeys initialAuthenticationKeys = new InitialAuthenticationKeys("",

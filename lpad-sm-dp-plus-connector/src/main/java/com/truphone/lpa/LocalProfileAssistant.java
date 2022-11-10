@@ -37,4 +37,6 @@ public interface LocalProfileAssistant {
     String allocateProfile(String mcc);
 
     void processPendingNotifications();
+
+    String[] smdsRetrieveEvents(String smdsAddress, DownloadProgress progress);
 }

@@ -136,7 +136,7 @@ public class LocalProfileAssistantImpl implements LocalProfileAssistant {
 
     }
 
-    public void smdsRetrieveEvents(Progress progress) {
-//        return new SmdsRetrieveEvents();
+    public String[] smdsRetrieveEvents(String smdsAddress, DownloadProgress progress) {
+      return new SmdsRetrieveEventsWorker(smdsAddress, progress, apduChannel,es9Module).run();
     }
 }
