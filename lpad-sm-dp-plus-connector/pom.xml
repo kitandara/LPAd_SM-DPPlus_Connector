@@ -54,12 +54,6 @@
             <artifactId>wiremock</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.truphone.lpad</groupId>
-            <artifactId>lpad-sm-dp-plus-connector</artifactId>
-            <version>1.0.4</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
     <build>
