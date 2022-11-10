@@ -8,6 +8,7 @@ import com.truphone.es9plus.message.request.GetBoundProfilePackageReq;
 import com.truphone.es9plus.message.request.HandleNotificationReq;
 import com.truphone.es9plus.message.request.InitiateAuthenticationReq;
 import com.truphone.es9plus.message.response.AuthenticateClientResp;
+import com.truphone.es9plus.message.response.AuthenticateClientRespEs11;
 import com.truphone.es9plus.message.response.GetBoundProfilePackageResp;
 import com.truphone.es9plus.message.response.InitiateAuthenticationResp;
 import com.truphone.util.LogStub;
@@ -95,6 +96,47 @@ public class Es9PlusImpl {
         }
     }
 
+
+    /**
+     * ES11 response to authentication is slightly different. so...
+     * @param transactionId
+     * @param authenticateServerResponse
+     * @param smdsAddress
+     * @return
+     */
+    public AuthenticateClientRespEs11 authenticateClientEs11(final String transactionId,
+        final String authenticateServerResponse,
+        final String smdsAddress) {
+        try {
+            AuthenticateClientReq authenticateClientReq = new AuthenticateClientReq();
+            authenticateClientReq.setTransactionId(transactionId);
+            authenticateClientReq.setAuthenticateServerResponse(authenticateServerResponse);
+            String body = GS.toJson(authenticateClientReq);
+
+            if (LogStub.getInstance().isDebugEnabled()) {
+                LogStub.getInstance().logDebug(LOG, "RSP Request: " + body);
+            }
+
+            HttpResponse result = new HttpRSPClient().clientRSPRequest(body, "https://" + smdsAddress, AUTHENTICATE_CLIENT_PATH);
+            if (result != null && !"".equals(result.getContent())) {
+                String response = toJsonString(result.getContent());
+
+                if (LogStub.getInstance().isDebugEnabled()) {
+                    LogStub.getInstance().logDebug(LOG, "RSP Response: " + response);
+                }
+
+                return GS.fromJson(response, AuthenticateClientRespEs11.class);
+            } else {
+                LOG.severe("Error contacting RSP Server");
+
+                throw new RuntimeException("Unable to communicate with RSP Server");
+            }
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Error contacting RSP Server", e);
+
+            throw new RuntimeException("Unable to communicate with RSP Server");
+        }
+    }
     public GetBoundProfilePackageResp getBoundProfilePackage(final String transactionId,
                                                              final String prepareDownloadResponse,
                                                              final String smdpAddress) {
