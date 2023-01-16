@@ -195,13 +195,13 @@ public class Es9PlusImpl {
             } else {
                 LOG.severe("Error contacting RSP Server or not 204: " + result);
 
-                throw new RuntimeException("Unable to handle notification with RSP Server");
+             //   throw new RuntimeException("Unable to handle notification with RSP Server");
             }
 
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Error contacting RSP Server", e);
 
-            throw new RuntimeException("Unable to handle notification with RSP Server");
+          //  throw new RuntimeException("Unable to handle notification with RSP Server");
         }
     }
 
